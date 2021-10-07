@@ -15,7 +15,7 @@ This project uses
 - Changed architecture to DDD approach.
 - Creation of interfaces and repository pattern, with dependecy injection and inversion.
 
-* This modifications were made focused to unit tests.
+* This modifications were made to make possible to test the application.
 
 - The other modifications I could do is change the BeerModel source to another service, a Json, something to simulate an entry.
 - Some filed could be change to constants or dictionary, depending on business rules and technical things, suchs as if is expected a database in the future.
