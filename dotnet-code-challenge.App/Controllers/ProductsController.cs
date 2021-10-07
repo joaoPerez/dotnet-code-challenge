@@ -32,7 +32,7 @@ namespace DotNetCodeChallenge.Controllers
                     Name = "Pilsner",
                     MinimumTemperature = 4,
                     MaximumTemperature = 6,
-                    Temperature = 2,
+                    Temperature = 0,
                     TemperatureStatus = "",
                 },
 

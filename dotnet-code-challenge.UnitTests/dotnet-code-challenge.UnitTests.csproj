@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\dotnet-code-challenge.Domain\dotnet-code-challenge.Domain.csproj" />
+    <ProjectReference Include="..\dotnet-code-challenge.Services\dotnet-code-challenge.Services.csproj" />
   </ItemGroup>
 
 </Project>
