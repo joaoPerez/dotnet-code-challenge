@@ -1,6 +1,6 @@
 ﻿namespace DotNetCodeChallenge.Models
 {
-    public class Beer
+    public class BeerDto
     {
         public string Id { get; set; }
 
@@ -11,7 +11,5 @@
         public int MaximumTemperature { get; set; }
 
         public int Temperature  { get; set; }
-
-        public string TemperatureStatus  { get; set; }
     }
 }

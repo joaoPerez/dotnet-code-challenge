@@ -21,6 +21,12 @@
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\dotnet-code-challenge.Domain\dotnet-code-challenge.Domain.csproj" />
+    <ProjectReference Include="..\dotnet-code-challenge.Services\dotnet-code-challenge.Services.csproj" />
+    <ProjectReference Include="..\dotnet-code-challenge.Infrastructure\dotnet-code-challenge.Infrastructure.csproj" />
+  </ItemGroup>
+
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">

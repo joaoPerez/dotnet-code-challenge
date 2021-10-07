@@ -5,6 +5,11 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using dotnet_code_challenge.Domain.Interfaces;
+using dotnet_code_challenge.Domain.Interfaces.Services;
+using dotnet_code_challenge.Services;
+using dotnet_code_challenge.Infrastructure.Repository;
+using dotnet_code_challenge.Domain.Interfaces.Repository;
 
 namespace DotNetCodeChallenge
 {
@@ -17,7 +22,7 @@ namespace DotNetCodeChallenge
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        // This method gets called by the runtime. Use this method to add serviccdes to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options =>
@@ -37,6 +42,9 @@ namespace DotNetCodeChallenge
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddScoped<ITemperatureSensorService, TemperatureSensorService>();
+            services.AddScoped<ITemperatureSensorRepository, TemperatureSensorRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

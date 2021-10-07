@@ -5,10 +5,26 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/dotnet-code-challenge.App/bin/Debug/net5.0/BillingSvc.API.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/dotnet-code-challenge.App",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "pattern": "\\\\bNow listening on:\\\\s+(https?://\\\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
-            "request": "attach"
+            "request": "attach",
+            "processId": "${command:pickProcess}"
         }
-
     ]
 }

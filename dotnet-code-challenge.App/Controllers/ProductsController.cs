@@ -4,6 +4,9 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DotNetCodeChallenge.Models;
+using dotnet_code_challenge.Domain.Interfaces;
+using dotnet_code_challenge.Domain.Interfaces.Services;
+using dotnet_code_challenge.Domain.Models;
 
 namespace DotNetCodeChallenge.Controllers
 {
@@ -11,22 +14,29 @@ namespace DotNetCodeChallenge.Controllers
     [Route("[controller]")]
     public class ProductsController : ControllerBase
     {
+        private readonly ITemperatureSensorService _temperatureSensorService;
+
+        public ProductsController(ITemperatureSensorService temperatureSensorService)
+        {
+            _temperatureSensorService = temperatureSensorService;
+        }
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            List<Beer> beers = new()
+            List<BeerModel> beers = new()
             {
-                new Beer
+                new BeerModel
                 {
                     Id = "1",
                     Name = "Pilsner",
                     MinimumTemperature = 4,
                     MaximumTemperature = 6,
-                    Temperature = 0,
+                    Temperature = 2,
                     TemperatureStatus = "",
                 },
 
-                new Beer
+                new BeerModel
                 {
                     Id = "2",
                     Name = "IPA",
@@ -36,7 +46,7 @@ namespace DotNetCodeChallenge.Controllers
                     TemperatureStatus = "",
                 },
 
-                new Beer
+                new BeerModel
                 {
                     Id = "3",
                     Name = "Lager",
@@ -46,7 +56,7 @@ namespace DotNetCodeChallenge.Controllers
                     TemperatureStatus = "",
                 },
 
-                new Beer
+                new BeerModel
                 {
                     Id = "4",
                     Name = "Stout",
@@ -56,7 +66,7 @@ namespace DotNetCodeChallenge.Controllers
                     TemperatureStatus = "",
                 },
 
-                new Beer
+                new BeerModel
                 {
                     Id = "5",
                     Name = "Wheat beer",
@@ -66,7 +76,7 @@ namespace DotNetCodeChallenge.Controllers
                     TemperatureStatus = "",
                 },
 
-                new Beer
+                new BeerModel
                 {
                     Id = "6",
                     Name = "Pale Ale",
@@ -77,33 +87,7 @@ namespace DotNetCodeChallenge.Controllers
                 }
             };
 
-            var http = new HttpClient();
-
-            foreach (var beer in beers)
-            {
-                var response = await http.GetAsync("https://temperature-sensor-service.herokuapp.com/sensor/" + beer.Id);
-                var jsonString = await response.Content.ReadAsStringAsync();
-                var sensor = JsonSerializer.Deserialize<Sensor>(jsonString, new JsonSerializerOptions {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
-
-                beer.Temperature = sensor.Temperature;
-
-                if (sensor.Temperature < beer.MinimumTemperature)
-                {
-                    beer.TemperatureStatus = "too low";
-                }
-
-                if (sensor.Temperature > beer.MaximumTemperature)
-                {
-                    beer.TemperatureStatus = "too high";
-                }
-
-                if (sensor.Temperature >= beer.MinimumTemperature && sensor.Temperature <= beer.MaximumTemperature)
-                {
-                    beer.TemperatureStatus = "all good";
-                }
-            }
+            beers = await _temperatureSensorService.GetBeerTemperatureStatus(beers);
 
             return Ok(beers);
         }
